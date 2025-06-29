@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getWeatherByCity } = require("../services/weatherService");
+const { getWeatherByCityOrCoords } = require("../services/weatherService");
 
-router.get("/:city", async (req, res) => {
-  const city = req.params.city;
+router.get("/:query", async (req, res) => {
   try {
-    const weatherData = await getWeatherByCity(city);
+    const weatherData = await getWeatherByCityOrCoords(req.params.query);
     res.json(weatherData);
   } catch (err) {
     res.status(500).json({ error: "Error fetching weather data" });
